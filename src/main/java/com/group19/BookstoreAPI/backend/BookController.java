@@ -12,8 +12,12 @@ public class BookController {
     private BookRepository bookRepository;
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<Book> getAllBooks() { return bookRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Book getBookById(@PathVariable Long id) {
+        return bookRepository.findById(id).orElse(null);
     }
 
     @PostMapping

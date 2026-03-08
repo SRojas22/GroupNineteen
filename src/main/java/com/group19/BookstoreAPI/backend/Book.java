@@ -14,6 +14,9 @@ public class Book {
     private String title;
     private String author;
     private String description;
+    private Double price;
+    private String genre;
+
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -26,6 +29,16 @@ public class Book {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public Double getPrice() { return price; }
+    public void getPrice(Double price) { this.price = price; }
+
+    public String getGenre() { return genre; }
+    public void setGenre(String genre) { this.genre = genre; }
+
+
+
+
 }
 
 
