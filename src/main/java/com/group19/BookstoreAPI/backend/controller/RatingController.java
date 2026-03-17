@@ -18,6 +18,7 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
+    // DTO for request body
     public static class CreateRatingRequest {
         public Long bookId;
         public Integer stars;
@@ -34,8 +35,23 @@ public class RatingController {
         }
     }
 
+    @GetMapping
+    public List<Rating> getAllRatings() {
+        return ratingService.getAllRatings();
+    }
+
     @GetMapping("/book/{bookId}")
     public List<Rating> getRatingsForBook(@PathVariable Long bookId) {
         return ratingService.getRatingsForBook(bookId);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRating(@PathVariable Long id) {
+        try {
+            ratingService.deleteRating(id);
+            return ResponseEntity.ok("Rating deleted successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
