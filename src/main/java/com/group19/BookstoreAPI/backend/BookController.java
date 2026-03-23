@@ -20,6 +20,11 @@ public class BookController {
         return bookRepository.findById(id).orElse(null);
     }
 
+    @GetMapping("/genre/{genre}")
+    public List<Book> getBooksByGenre(@PathVariable String genre) {
+        return bookRepository.findByGenreContainingIgnoreCase(genre);
+    }
+
     @PostMapping
     public Book addBook(@RequestBody Book book) {
         return bookRepository.save(book);
