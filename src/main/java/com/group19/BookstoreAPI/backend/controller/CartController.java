@@ -1,5 +1,6 @@
 package com.group19.BookstoreAPI.backend.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -41,5 +42,10 @@ public class CartController {
         public ResponseEntity<Void> removeBookFromCart(@PathVariable Long cartId, @PathVariable Long bookId) {
         cartService.removeBookFromCart(cartId, bookId);
         return ResponseEntity.noContent().build();
-}
+    }
+    //returns total price
+    @GetMapping("/{cartId}/subtotal")
+        public BigDecimal getSubtotal(@PathVariable Long cartId) {
+        return cartService.calculateSubtotal(cartId);
+    }
 }

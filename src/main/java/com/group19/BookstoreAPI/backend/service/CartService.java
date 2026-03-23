@@ -1,5 +1,6 @@
 package com.group19.BookstoreAPI.backend.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class CartService {
     public List<CartItem> getCartItems(Long cartId) {
         return cartItemRepository.findByCartId(cartId);
     }
-//Deletion
+    //Deletion
     public void removeBookFromCart(Long cartId, Long bookId) {
     List<CartItem> items = cartItemRepository.findByCartId(cartId);
 
@@ -33,5 +34,16 @@ public class CartService {
             cartItemRepository.delete(item);
         }
     }
-}
+    }
+    //Subtotal
+    public BigDecimal calculateSubtotal(Long cartId) {
+    List<CartItem> items = cartItemRepository.findByCartId(cartId);
+    BigDecimal total = BigDecimal.ZERO;
+
+    for (CartItem item : items) {
+        total = total.add(new BigDecimal("10.00"));
+    }
+
+    return total;
+    }
 }
