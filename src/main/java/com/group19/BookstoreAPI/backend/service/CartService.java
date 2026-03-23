@@ -24,7 +24,7 @@ public class CartService {
     public List<CartItem> getCartItems(Long cartId) {
         return cartItemRepository.findByCartId(cartId);
     }
-
+//Deletion
     public void removeBookFromCart(Long cartId, Long bookId) {
     List<CartItem> items = cartItemRepository.findByCartId(cartId);
 
