@@ -1,10 +1,11 @@
 package com.group19.BookstoreAPI.backend.service;
 
-import com.group19.BookstoreAPI.backend.entity.CartItem;
-import com.group19.BookstoreAPI.backend.repository.CartItemRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.group19.BookstoreAPI.backend.entity.CartItem;
+import com.group19.BookstoreAPI.backend.repository.CartItemRepository;
 
 @Service
 public class CartService {
@@ -23,4 +24,14 @@ public class CartService {
     public List<CartItem> getCartItems(Long cartId) {
         return cartItemRepository.findByCartId(cartId);
     }
+
+    public void removeBookFromCart(Long cartId, Long bookId) {
+    List<CartItem> items = cartItemRepository.findByCartId(cartId);
+
+    for (CartItem item : items) {
+        if (item.getBookId().equals(bookId)) {
+            cartItemRepository.delete(item);
+        }
+    }
+}
 }
