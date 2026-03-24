@@ -36,12 +36,21 @@ public class BookController {
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         Optional<Book> book = bookService.getBookById(id);
+        return book.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
-        if (book.isPresent()) {
-            return ResponseEntity.ok(book.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    // GET books by genre
+    @GetMapping("/genre/{genre}")
+    public List<Book> getBooksByGenre(@PathVariable String genre) {
+        return bookService.getBooksByGenre(genre);
+    }
+
+    // UPDATE book
+    @PutMapping("/{id}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookDetails) {
+        Book updated = bookService.updateBook(id, bookDetails);
+        return ResponseEntity.ok(updated);
     }
 
     // DELETE book
@@ -49,11 +58,5 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookDetails) {
-        Book updated = bookService.updateBook(id, bookDetails);
-        return ResponseEntity.ok(updated);
     }
 }
