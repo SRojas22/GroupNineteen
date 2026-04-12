@@ -23,7 +23,7 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Book> createBook(@RequestBody Book book) {
         Book saved = bookService.saveBook(book);
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.status(201).body(saved);
     }
 
     // GET all books
@@ -51,6 +51,18 @@ public class BookController {
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookDetails) {
         Book updated = bookService.updateBook(id, bookDetails);
         return ResponseEntity.ok(updated);
+    }
+
+    //GET book by isbn
+    @GetMapping("/isbn/{isbn}")
+    public ResponseEntity<Book> getBookByIsbn(@PathVariable String isbn) {
+        Optional<Book> book = bookService.getBookByIsbn(isbn);
+
+        if (book.isPresent()) {
+            return ResponseEntity.ok(book.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // DELETE book
