@@ -61,6 +61,9 @@ public class BookService {
 
     public Optional<Book> getBookByIsbn(String isbn) {
         return bookRepository.findByIsbn(isbn);
+    // GET BY GENRE ✅ (NEW)
+    public List<Book> getBooksByGenre(String genre) {
+        return bookRepository.findByGenreContainingIgnoreCase(genre);
     }
 
     // DELETE

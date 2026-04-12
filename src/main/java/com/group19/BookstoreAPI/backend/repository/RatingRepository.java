@@ -9,5 +9,8 @@ import com.group19.BookstoreAPI.backend.entity.Rating;
 
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Long> {
+
     List<Rating> findByBookId(Long bookId);
+
+    boolean existsByBookIdAndUserId(Long bookId, Long userId);
 }

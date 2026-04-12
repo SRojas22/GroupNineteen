@@ -1,5 +1,7 @@
 package com.group19.BookstoreAPI.backend.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,4 +14,6 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
     Optional<Book> findByIsbn(String isbn);
     List<Book> findByAuthorId(Long authorId);
+}
+    List<Book> findByGenreContainingIgnoreCase(String genre);
 }

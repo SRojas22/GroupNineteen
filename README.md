@@ -48,6 +48,4 @@ http://localhost:8080
 
 - Spring Boot is handled automatically (no manual install needed)
 
-- This is just initial setup, no features yet
-
 - Database is local for now
