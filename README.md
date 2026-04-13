@@ -69,3 +69,4 @@ http://localhost:8080/swagger-ui/index.html#/
 
 - Spring Boot is handled automatically (no manual install needed)
 - Database is local for now
+  
