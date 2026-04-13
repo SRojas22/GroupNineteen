@@ -14,6 +14,6 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
     Optional<Book> findByIsbn(String isbn);
     List<Book> findByAuthorId(Long authorId);
-}
-    List<Book> findByGenreContainingIgnoreCase(String genre);
+
+List<Book> findByGenreContainingIgnoreCase(String genre);
 }
