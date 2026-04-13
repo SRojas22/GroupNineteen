@@ -18,31 +18,24 @@ public class UserProfileService {
 
     // CREATE
     public UserProfile createProfile(UserProfile profile) {
+        if (profile.getCreditCards() != null) {
+            profile.getCreditCards().forEach(card -> card.setUserProfile(profile));
+        }
         return userProfileRepository.save(profile);
     }
 
-    // GET BY ID
-    public Optional<UserProfile> getProfileById(Long id) {
-        return userProfileRepository.findById(id);
+    // GET BY USERNAME
+    public Optional<UserProfile> getProfileByUsername(String username) {
+        return userProfileRepository.findByUsername(username);
     }
 
-    // UPDATE
-    public Optional<UserProfile> updateProfile(Long id, UserProfile updated) {
-        return userProfileRepository.findById(id).map(existing -> {
-            existing.setName(updated.getName());
-            existing.setEmail(updated.getEmail());
-            existing.setUsername(updated.getUsername());
-            existing.setBio(updated.getBio());
+    // UPDATE BY USERNAME (email cannot be updated)
+    public Optional<UserProfile> updateProfile(String username, UserProfile updated) {
+        return userProfileRepository.findByUsername(username).map(existing -> {
+            if (updated.getName() != null) existing.setName(updated.getName());
+            if (updated.getPassword() != null) existing.setPassword(updated.getPassword());
+            if (updated.getHomeAddress() != null) existing.setHomeAddress(updated.getHomeAddress());
             return userProfileRepository.save(existing);
         });
-    }
-
-    // DELETE
-    public boolean deleteProfile(Long id) {
-        if (userProfileRepository.existsById(id)) {
-            userProfileRepository.deleteById(id);
-            return true;
-        }
-        return false;
     }
 }
