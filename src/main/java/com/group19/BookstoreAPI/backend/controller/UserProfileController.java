@@ -17,35 +17,25 @@ public class UserProfileController {
         this.userProfileService = userProfileService;
     }
 
-    // POST /profiles - Create a new profile
+    // POST /profiles - Create a new user profile
     @PostMapping
-    public ResponseEntity<UserProfile> createProfile(@RequestBody UserProfile profile) {
-        UserProfile created = userProfileService.createProfile(profile);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    public ResponseEntity<Void> createProfile(@RequestBody UserProfile profile) {
+        userProfileService.createProfile(profile);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    // GET /profiles/{id} - Get profile by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<UserProfile> getProfileById(@PathVariable Long id) {
-        return userProfileService.getProfileById(id)
+    // GET /profiles/{username} - Get profile by username
+    @GetMapping("/{username}")
+    public ResponseEntity<UserProfile> getProfile(@PathVariable String username) {
+        return userProfileService.getProfileByUsername(username)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // PUT /profiles/{id} - Update profile
-    @PutMapping("/{id}")
-    public ResponseEntity<UserProfile> updateProfile(@PathVariable Long id, @RequestBody UserProfile updated) {
-        return userProfileService.updateProfile(id, updated)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    // DELETE /profiles/{id} - Delete profile
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProfile(@PathVariable Long id) {
-        if (userProfileService.deleteProfile(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    // PATCH /profiles/{username} - Update profile fields except email
+    @PatchMapping("/{username}")
+    public ResponseEntity<Void> updateProfile(@PathVariable String username, @RequestBody UserProfile updated) {
+        boolean found = userProfileService.updateProfile(username, updated).isPresent();
+        return found ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
